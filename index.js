@@ -4,12 +4,10 @@ function initialize () {
 	chrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase()); 
 
 	if(chrome){
-		if ('speechSynthesis' in window && 'SpeechRecognition' in window) {
+		
 			$("#habla").on("click",habla("Hola amigo, esta voz da miedo"));
 			$("#escucha").on("click",escucha);
-		}else{
-			alert("Tu navegador no puede hablar ni entender lo que dices u.u");
-		}
+		
 	}else{
 		alert("Usa chrome y escucharas una sorpresa");
 	}
