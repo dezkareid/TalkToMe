@@ -5,7 +5,7 @@ function initialize () {
 
 	if(chrome){
 		
-			$("#habla").on("click",habla("Hola amigo, esta voz da miedo"));
+			$("#habla").on("click",habla("Welcome to jarvis"));
 			$("#escucha").on("click",escucha);
 		
 	}else{
@@ -22,7 +22,7 @@ function habla (mensaje) {
 	msg.volume = 1; // 0 to 1
 	msg.rate = 1; // 0.1 to 10
 	msg.pitch = 2; //0 to 2
-	msg.lang = 'es-MX';
+	msg.lang = 'en-US';
 	msg.onend = function(e) {
   		
 	};
@@ -34,16 +34,21 @@ function habla (mensaje) {
 
 function escucha () {
 	var recognition = new webkitSpeechRecognition();
-	recognition.continuous = false;
-	recognition.interimResults = false;
-	recognition.lang = "es";
+	recognition.continuous = true;
+	recognition.interimResults = true;
+	recognition.lang = "en";
 	recognition.onresult = function (event) {
 
     for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
            // insertAtCaret(textAreaID, event.results[i][0].transcript);
+           if(event.results[i][0].transcript.trim() == "speech"){
+           	recognition.stop();
+           	habla("War mode activated, all weapons are online");
+           }
            console.log("Tu dijiste: "+event.results[i][0].transcript);
-           habla("Tu dijiste: "+event.results[i][0].transcript);
+
+           //habla("Tu dijiste: "+event.results[i][0].transcript);
         }
     }
 };
